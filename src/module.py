@@ -39,7 +39,6 @@ def chat_module(message: Any, params: Params) -> Result:
     summary = ""
     conversationalStyle = ""
     question_response_details_prompt = ""
-    agent_type = "base"
 
     if "include_test_data" in params:
         include_test_data = params["include_test_data"]
@@ -59,21 +58,14 @@ def chat_module(message: Any, params: Params) -> Result:
             question_information,
             question_access_information
         )
-    if "agent_type" in params:
-        agent_type = params["agent_type"]
     if "conversation_id" in params:
         conversation_id = params["conversation_id"]
     else:
         raise Exception("Internal Error: The conversation id is required in the parameters of the chat module.")
     
-    if agent_type == "base":
-        invoke = invoke_base_agent
-    else:
-        raise Exception("Internal Error: The agent type is not supported.")
-    
     start_time = time.time()
 
-    chatbot_response = invoke(query=message, \
+    chatbot_response = invoke_base_agent(query=message, \
                             conversation_history=conversation_history, \
                             summary=summary, \
                             conversationalStyle=conversationalStyle, \

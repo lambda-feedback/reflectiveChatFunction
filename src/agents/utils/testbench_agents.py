@@ -56,8 +56,6 @@ try:
         )
         print("Question Response Details Prompt:", question_response_details_prompt, "\n\n")
 
-    if "agent_type" in params:
-        agent_type = params["agent_type"]
     if "conversation_id" in params:
         conversation_id = params["conversation_id"]
     else:
@@ -66,16 +64,7 @@ try:
     """
       STEP 3: Call the LLM agent to get a response to the user's message
     """
-    # NOTE: ### SET the agent type to use ###
-    agent_type = "informational" 
-    # NOTE: #################################
-
-    if agent_type == "base":
-        invoke = invoke_base_agent
-    else:
-        raise Exception("Unknown Tutor Agent Type")
-
-    response = invoke(query=message, \
+    response = invoke_base_agent(query=message, \
                             conversation_history=conversation_history, \
                             summary=summary, \
                             conversationalStyle=conversationalStyle, \

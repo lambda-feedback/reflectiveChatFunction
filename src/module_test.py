@@ -66,28 +66,14 @@ class TestChatModuleFunction(unittest.TestCase):
                 self.assertTrue("Internal Error" in str(cm.exception))
                 self.assertTrue("conversation history" in str(cm.exception))
 
-    def test_all_agents_output(self):
-        # Checking the output of the agents
-        agents = ["informational", "socratic"]
-        for agent in agents:
-            response = "Hello, World"
-            params = Params(conversation_id="1234Test", agent_type=agent, conversation_history=[{ "type": "user", "content": response }])
+    def test_agent_output(self):
+        # Checking the output of the agent
+        response = "Hello, World"
+        params = Params(conversation_id="1234Test", conversation_history=[{ "type": "user", "content": response }])
 
-            result = chat_module(response, params)
+        result = chat_module(response, params)
 
-            self.assertIsNotNone(result.get("chatbot_response"))
-
-    def test_unknown_agent_type(self):
-        agents = ["unknown"]
-        for agent in agents:
-            response = "Hello, World"
-            params = Params(conversation_id="1234Test", agent_type=agent, conversation_history=[{ "type": "user", "content": response }])
-
-            with self.assertRaises(Exception) as cm:
-                chat_module(response, params)
-
-            self.assertTrue("Input Parameter Error:" in str(cm.exception))
-            self.assertTrue("Agent Type" in str(cm.exception))
+        self.assertIsNotNone(result.get("chatbot_response"))
 
     def test_processing_time_calc(self):
         # Checking the processing time calculation
