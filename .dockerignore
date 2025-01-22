@@ -154,7 +154,4 @@ src/agents/utils/testbench_prompts.py
 src/agents/utils/langgraph_viz.py
 
 # development agents
-src/agents/base_agent/
 src/agents/student_agent/
-src/agents/development_agents/
-src/agents/google_learnLM_agent/
