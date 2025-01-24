@@ -25,20 +25,20 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Load cached venv
-        id: dependencies-cache
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.python-setup.outputs.python-version }}
+      # - name: Load cached venv
+      #   id: dependencies-cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: .venv
+      #     key: venv-${{ runner.os }}-${{ steps.python-setup.outputs.python-version }}
 
       - name: Create Venv if Cache not found
-        if: steps.dependencies-cache.outputs.cache-hit != 'true'
+        # if: steps.dependencies-cache.outputs.cache-hit != 'true'
         run: |
           python -m venv .venv
 
       - name: Install dependencies
-        if: steps.dependencies-cache.outputs.cache-hit != 'true'
+        # if: steps.dependencies-cache.outputs.cache-hit != 'true'
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
