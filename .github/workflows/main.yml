@@ -76,6 +76,7 @@ jobs:
       contents: read
       id-token: write
       packages: write
+      issues: write
     secrets:
       aws-access-key-id: ${{ secrets.LAMBDA_CONTAINER_PIPELINE_AWS_ID }}
       aws-secret-key: ${{ secrets.LAMBDA_CONTAINER_PIPELINE_AWS_SECRET}}
