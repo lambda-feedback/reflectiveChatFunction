@@ -22,7 +22,7 @@ def handler(event: JsonType, context):
             "statusCode": 400,
             "body": "Missing 'body' key in event. Please confirm the key in the json body."
         }
-    body = event["body"]
+    body = json.loads(event["body"])
         
     if "message" not in body:
         return {

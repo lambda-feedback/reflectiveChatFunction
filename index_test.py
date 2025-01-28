@@ -36,7 +36,7 @@ class TestChatIndexFunction(unittest.TestCase):
                 "params": {"conversation_id": "1234Test", "conversation_history": [{"type": "user", "content": "Hello, World"}]}
             }
             event.pop(arg)
-            event = {"body":event}
+            event = {"body":json.dumps(event)}
 
             result = handler(event, None)
 
@@ -49,7 +49,7 @@ class TestChatIndexFunction(unittest.TestCase):
             "message": "Hello, World",
             "params": {"conversation_id": "1234Test", "conversation_history": [{"type": "user", "content": "Hello, World"}]}
         }
-        event = {"body":event}
+        event = {"body":json.dumps(event)}
 
         result = handler(event, None)
 
@@ -61,7 +61,7 @@ class TestChatIndexFunction(unittest.TestCase):
             "message": "Hello, World",
             "params": {"conversation_id": "1234Test", "conversation_history": [{"type": "user", "content": "Hello, World"}]}
         }
-        event = {"body":event}
+        event = {"body":json.dumps(event)}
 
         result = handler(event, None)
 
