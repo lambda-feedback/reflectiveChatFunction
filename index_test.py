@@ -1,4 +1,5 @@
 import unittest
+import json
 
 try:
     from .index import handler
@@ -22,6 +23,8 @@ class TestChatIndexFunction(unittest.TestCase):
 
     Use module() to check your algorithm works
     as it should.
+
+    The expected input of the hander is a JsonType.
     """
 
     def test_missing_argument(self):
@@ -33,8 +36,11 @@ class TestChatIndexFunction(unittest.TestCase):
                 "params": {"conversation_id": "1234Test", "conversation_history": [{"type": "user", "content": "Hello, World"}]}
             }
             event.pop(arg)
+            event = {"body":event}
 
             result = handler(event, None)
+
+            print(result)
 
             self.assertEqual(result.get("statusCode"), 400)
     
@@ -43,9 +49,11 @@ class TestChatIndexFunction(unittest.TestCase):
             "message": "Hello, World",
             "params": {"conversation_id": "1234Test", "conversation_history": [{"type": "user", "content": "Hello, World"}]}
         }
+        event = {"body":event}
 
         result = handler(event, None)
 
+        print(result)
         self.assertEqual(result.get("statusCode"), 200)
 
     def test_correct_response(self):
@@ -53,8 +61,10 @@ class TestChatIndexFunction(unittest.TestCase):
             "message": "Hello, World",
             "params": {"conversation_id": "1234Test", "conversation_history": [{"type": "user", "content": "Hello, World"}]}
         }
+        event = {"body":event}
 
         result = handler(event, None)
 
+        print(result)
         self.assertEqual(result.get("statusCode"), 200)
         
