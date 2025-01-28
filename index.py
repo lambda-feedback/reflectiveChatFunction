@@ -1,14 +1,17 @@
+import json
 try:
     from .src.module import chat_module
+    from .src.agents.utils.types import JsonType
 except ImportError:
     from src.module import chat_module
+    from src.agents.utils.types import JsonType
 
-def handler(event, context):
+def handler(event: JsonType, context):
     """
     Lambda handler function
     """
     # Log the input event for debugging purposes
-    # print("Received event:", json.dumps(event, indent=2))
+    print("Received event:", json.dumps(event, indent=2))
 
     if "message" not in event:
         return {
