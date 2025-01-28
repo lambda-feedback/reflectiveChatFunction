@@ -3,6 +3,7 @@ name: Main deployment of Chatbot lambda function
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   test:
