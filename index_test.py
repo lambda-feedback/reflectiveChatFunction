@@ -40,8 +40,6 @@ class TestChatIndexFunction(unittest.TestCase):
 
             result = handler(event, None)
 
-            print(result)
-
             self.assertEqual(result.get("statusCode"), 400)
     
     def test_correct_arguments(self):
@@ -53,7 +51,6 @@ class TestChatIndexFunction(unittest.TestCase):
 
         result = handler(event, None)
 
-        print(result)
         self.assertEqual(result.get("statusCode"), 200)
 
     def test_correct_response(self):
@@ -65,6 +62,5 @@ class TestChatIndexFunction(unittest.TestCase):
 
         result = handler(event, None)
 
-        print(result)
         self.assertEqual(result.get("statusCode"), 200)
         

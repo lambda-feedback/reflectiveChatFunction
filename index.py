@@ -38,8 +38,6 @@ def handler(event: JsonType, context):
     message = body["message"]
     params = body["params"]
 
-    print("Message:", message, "Params:", params)
-
     try:
         chatbot_response = chat_module(message, params)
     except Exception as e:
@@ -53,7 +51,5 @@ def handler(event: JsonType, context):
         "statusCode": 200,
         "body": json.dumps(chatbot_response)
     }
-
-    print("Response:", json.dumps(response, indent=2))
 
     return response
