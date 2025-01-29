@@ -15,7 +15,7 @@ def handler(event: JsonType, context):
 
     """
     # Log the input event for debugging purposes
-    print("Received event:", json.dumps(event, indent=2))
+    # print("Received event:", json.dumps(event, indent=2))
 
     if "body" not in event:
         return {
@@ -54,6 +54,6 @@ def handler(event: JsonType, context):
         "body": chatbot_response
     }
 
-    print("Response:", json.dumps(response, indent=2))
+    # print("Response:", json.dumps(response, indent=2))
 
-    return response
+    return json.dumps(response)
