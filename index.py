@@ -54,4 +54,6 @@ def handler(event: JsonType, context):
         "body": chatbot_response
     }
 
+    print("Response:", json.dumps(response, indent=2))
+
     return response
