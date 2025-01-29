@@ -51,9 +51,9 @@ def handler(event: JsonType, context):
     # Create a response
     response = {
         "statusCode": 200,
-        "body": chatbot_response
+        "body": json.dumps(chatbot_response)
     }
 
-    # print("Response:", json.dumps(response, indent=2))
+    print("Response:", json.dumps(response, indent=2))
 
-    return json.dumps(response)
+    return response
