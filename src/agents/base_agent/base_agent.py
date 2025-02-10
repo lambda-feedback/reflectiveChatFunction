@@ -1,10 +1,10 @@
 try:
-    from ..llm_factory import OpenAILLMs
+    from ..llm_factory import OpenAILLMs, GoogleAILLMs
     from .base_prompts import \
         role_prompt, conv_pref_prompt, update_conv_pref_prompt, summary_prompt, update_summary_prompt, summary_system_prompt
     from ..utils.types import InvokeAgentResponseType
 except ImportError:
-    from src.agents.llm_factory import OpenAILLMs
+    from src.agents.llm_factory import OpenAILLMs, GoogleAILLMs
     from src.agents.base_agent.base_prompts import \
         role_prompt, conv_pref_prompt, update_conv_pref_prompt, summary_prompt, update_summary_prompt, summary_system_prompt
     from src.agents.utils.types import InvokeAgentResponseType
@@ -35,9 +35,9 @@ class State(TypedDict):
 
 class BaseAgent:
     def __init__(self):
-        llm = OpenAILLMs()
+        llm = OpenAILLMs()                  # OpenAILLMs() or GoogleAILLMs()
         self.llm = llm.get_llm()
-        summarisation_llm = OpenAILLMs()
+        summarisation_llm = OpenAILLMs()    # OpenAILLMs() or GoogleAILLMs()
         self.summarisation_llm = summarisation_llm.get_llm()
         self.summary = ""
         self.conversationalStyle = ""
@@ -120,12 +120,12 @@ class BaseAgent:
             conversationalStyle_message = self.conversation_preference_prompt
 
         # STEP 1: Summarize the conversation
-        messages = state["messages"][:-1] + [SystemMessage(content=summary_message)] 
+        messages = state["messages"][:-1] + [HumanMessage(content=summary_message)] 
         valid_messages = self.check_for_valid_messages(messages)
         summary_response = self.summarisation_llm.invoke(valid_messages)
 
         # STEP 2: Analyze the conversational style
-        messages = state["messages"][:-1] + [SystemMessage(content=conversationalStyle_message)]
+        messages = state["messages"][:-1] + [HumanMessage(content=conversationalStyle_message)]
         valid_messages = self.check_for_valid_messages(messages)
         conversationalStyle_response = self.summarisation_llm.invoke(valid_messages)
 

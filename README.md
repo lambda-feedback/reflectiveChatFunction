@@ -9,7 +9,19 @@ This chapter helps you to quickly set up a new Python chat module function using
 > [!NOTE]
 > To develop this function further, you will require the following environment variables in your `.env` file:
 ```bash
-> If you use azure-openai:
+> If you use OpenAI:
+OPENAI_API_KEY
+OPENAI_MODEL
+
+> If you use GoogleAI:
+GOOGLE_AI_API_KEY
+GOOGLE_AI_MODEL
+```
+
+> [!Note]
+> If you decide to use another endpoint such as Azure or Ollama or any other, please update the github workflow files to use the right secrets and variables for testing.
+```bash
+> If you use Azure-OpenAI:
 AZURE_OPENAI_API_KEY
 AZURE_OPENAI_ENDPOINT
 AZURE_OPENAI_API_VERSION
@@ -19,11 +31,7 @@ AZURE_OPENAI_EMBEDDING_1536_DEPLOYMENT
 AZURE_OPENAI_EMBEDDING_3072_MODEL
 AZURE_OPENAI_EMBEDDING_1536_MODEL
 
-> If you use openai:
-OPENAI_API_KEY
-OPENAI_MODEL
-
-> For monitoring of the LLM calls (follow instructions on how to set up on langsmith):
+> For monitoring of the LLM calls (follow instructions on how to set up on langsmith online):
 LANGCHAIN_TRACING_V2
 LANGCHAIN_ENDPOINT
 LANGCHAIN_API_KEY
