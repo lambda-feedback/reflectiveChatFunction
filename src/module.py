@@ -1,14 +1,13 @@
+import time
 from typing import Any
+from lf_toolkit.chat import ChatResult as Result, ChatParams as Params
 
 try:
-    from .module_response import Result, Params
     from .agents.utils.parse_json_to_prompt import parse_json_to_prompt
     from .agents.base_agent.base_agent import invoke_base_agent
 except ImportError:
-    from src.module_response import Result, Params
     from src.agents.utils.parse_json_to_prompt import parse_json_to_prompt
     from src.agents.base_agent.base_agent import invoke_base_agent
-import time
 
 def chat_module(message: Any, params: Params) -> Result:
     """
