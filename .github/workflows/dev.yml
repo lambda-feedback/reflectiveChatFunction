@@ -75,6 +75,8 @@ jobs:
     needs: test
     with:
       template-repository-name: "lambda-feedback/chat-function-boilerplate"
+      # allow for developer to specify the environment variables that are used by the deployed AWS Lambda. Default to mock then admin can update.
+      deployed-environment-variables: '["OPENAI_API_KEY","OPENAI_MODEL","GOOGLE_AI_API_KEY","GOOGLE_AI_MODEL"]'
     permissions:
       contents: read
       id-token: write

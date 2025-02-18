@@ -23,11 +23,11 @@ import json
 try:
   from ..student_agent.student_agent import invoke_student_agent
   from .parse_json_to_prompt import parse_json_to_prompt
-  from ..base_agent import invoke_base_agent
+  from ..base_agent.base_agent import invoke_base_agent
 except ImportError:
   from src.agents.student_agent.student_agent import invoke_student_agent
   from src.agents.utils.parse_json_to_prompt import parse_json_to_prompt
-  from src.agents.base_agent import invoke_base_agent
+  from src.agents.base_agent.base_agent import invoke_base_agent
 import os
 
 
@@ -70,11 +70,11 @@ def generate_synthetic_conversations(raw_text: str, num_turns: int, student_agen
       # Student starts
       student_response = invoke_student_agent(message, conversation_history[:-1], summary, student_agent_type, question_response_details_prompt, conversation_id)
       conversation_history.append({
-        "role": "assistant",
+        "role": "user",
         "content": student_response["output"]
       })
     else:
-      tutor_response = invoke_tutor_agent(message, conversation_history[:-1], summary, conversational_style, question_response_details_prompt, conversation_id)
+      tutor_response = invoke_tutor_agent(message, conversation_history, summary, conversational_style, question_response_details_prompt, conversation_id)
       conversation_history.append({
         "role": "assistant",
         "content": tutor_response["output"]
@@ -88,6 +88,8 @@ def generate_synthetic_conversations(raw_text: str, num_turns: int, student_agen
   #  Save Conversation
   conversation_output = {
     "conversation_id": conversation_id+"_"+student_agent_type+"_"+tutor_agent_type+"_synthetic",
+    "student_agent_type": student_agent_type,
+    "tutor_agent_type": tutor_agent_type,
     "conversation": conversation_history
   }
   return conversation_output
