@@ -194,8 +194,8 @@ def parse_json_to_prompt( questionSubmissionSummary: Optional[List[StudentWorkRe
 
     questionDetails = f"""This is the question I am currently working on. I am currently working on Part ({convert_index_to_lowercase_letter(questionAccessInformation.currentPart.position)}). Below, you'll find its details, including the parts of the question, my responses for each response area, and the feedback I received. This information highlights my efforts and progress so far. Use this this information to inform your understanding about the question materials provided to me and my work on them.
     Maths equations are in KaTex format, preserve them the same. Use British English spellings.
-{f'# Question Set {questionInformation.setNumber + 1}: {questionInformation.setName};' if questionInformation.setName and questionInformation.setNumber else ''}
-# Question{f' {questionInformation.setNumber + 1}.{questionInformation.questionNumber + 1}' if questionInformation.setNumber and questionInformation.questionNumber else ''}: {questionInformation.questionTitle};
+{f'# Question Set {questionInformation.setNumber + 1}: {questionInformation.setName};' if ((questionInformation.setName is not None) and (questionInformation.setNumber is not None)) else ''}
+# Question {f' {questionInformation.setNumber + 1}.{questionInformation.questionNumber + 1}' if ((questionInformation.setNumber is not None) and (questionInformation.questionNumber is not None)) else ''}: {questionInformation.questionTitle};
     Guidance to Solve the Question: {questionInformation.questionGuidance or 'None'};
     Description of Question: {questionInformation.questionContent};
     Expected Time to Complete the Question: {f'{questionInformation.durationLowerBound} - {questionInformation.durationUpperBound} min;' if questionInformation.durationLowerBound and questionInformation.durationUpperBound else 'No specified duration.'}
