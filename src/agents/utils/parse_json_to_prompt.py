@@ -137,13 +137,13 @@ def parse_json_to_prompt( questionSubmissionSummary: Optional[List[StudentWorkRe
                           questionInformation: Optional[QuestionDetails],
                           questionAccessInformation: Optional[QuestionAccessInformation]
                         ) -> Optional[str]:
+
+    if not questionInformation or not questionAccessInformation:
+        return "There must have been an error in fetching the question details. So ask me about the question I am working on such that you can still help me."
     
     questionSubmissionSummary = [StudentWorkResponseArea(**submissionsSummary) for submissionsSummary in questionSubmissionSummary]
     questionInformation = QuestionDetails(**questionInformation)
     questionAccessInformation = QuestionAccessInformation(**questionAccessInformation)
-    
-    if not questionSubmissionSummary or not questionInformation or not questionAccessInformation:
-        return None
 
     def format_response_area_details(responseArea: ResponseAreaDetails, studentSummary: List[StudentWorkResponseArea]) -> str:
         submissionDetails = "\n".join(
@@ -163,7 +163,7 @@ def parse_json_to_prompt( questionSubmissionSummary: Optional[List[StudentWorkRe
         return f"""
         ## Response Area: {responseArea.position + 1}
         {f'Area task: What is {responseArea.preResponseText} ?' if responseArea.preResponseText else ''}
-        (Secret) Expected Answer: {responseArea.answer};
+        (Secret - not to be shared) Expected Answer: {responseArea.answer};
         {submissionDetails}"""
 
     def format_part_details(part: PartDetails, currentPart: CurrentPart, summary: List[StudentWorkResponseArea]) -> str:
@@ -188,7 +188,7 @@ def parse_json_to_prompt( questionSubmissionSummary: Optional[List[StudentWorkRe
     {f"Time spent on this part: {currentPart.timeTakenPart if currentPart.timeTakenPart is not None else 'No recorded duration'}" if currentPart.id == part.publishedPartId else ''}
     Part Content: {part.publishedPartContent.strip() if part.publishedPartContent else 'No content'};
     {responseAreas}
-    {f'Final Part Answer: {part.publishedPartAnswerContent}' if part.publishedPartAnswerContent else 'No direct answer'}
+    {f'Final Part Answer: {part.publishedPartAnswerContent}' if part.publishedPartAnswerContent else 'No direct answer for this part.'}
     {workedSolutions}
 """
 

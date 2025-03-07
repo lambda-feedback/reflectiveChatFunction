@@ -52,11 +52,16 @@ def chat_module(message: Any, params: Params) -> Result:
         question_submission_summary = question_response_details["questionSubmissionSummary"] if "questionSubmissionSummary" in question_response_details else []
         question_information = question_response_details["questionInformation"] if "questionInformation" in question_response_details else {}
         question_access_information = question_response_details["questionAccessInformation"] if "questionAccessInformation" in question_response_details else {}
-        question_response_details_prompt = parse_json_to_prompt(
-            question_submission_summary,
-            question_information,
-            question_access_information
-        )
+        try:
+            question_response_details_prompt = parse_json_to_prompt(
+                question_submission_summary,
+                question_information,
+                question_access_information
+            )
+            print("INFO:: ", question_response_details_prompt)
+        except Exception as e:
+            print("ERROR:: ", e)
+            raise Exception("Internal Error: The question response details could not be parsed.")
     if "conversation_id" in params:
         conversation_id = params["conversation_id"]
     else:
