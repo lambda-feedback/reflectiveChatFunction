@@ -1,6 +1,7 @@
 import time
 from typing import Any
-from lf_toolkit.chat import ChatResult as Result, ChatParams as Params
+from lf_toolkit.chat.result import ChatResult as Result
+from lf_toolkit.chat.params import ChatParams as Params
 
 try:
     from .agents.utils.parse_json_context_to_prompt import parse_json_to_prompt
