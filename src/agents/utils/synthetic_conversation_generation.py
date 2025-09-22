@@ -8,9 +8,7 @@ The agents will play the role of a tutor and a student conversing about the ques
 The conversations will be 20 turns long, with the tutor and student taking turns to send a message.
 
 The tutor can be one of the following types:
-- Informational Agent
-- Socratic Agent
-- Google's LearnLM-Tutor Agent
+- Informational Agent (base)
 The tutor agent can be selected by changing the "agent_type" field in this script.
 
 The student can have multiple skill levels and conversational styles. Those are defined by the prompts used by the LLM.
@@ -22,11 +20,11 @@ import csv
 import json
 try:
   from ..student_agent.student_agent import invoke_student_agent
-  from .parse_json_to_prompt import parse_json_to_prompt
+  from .parse_json_context_to_prompt import parse_json_to_prompt
   from ..base_agent.base_agent import invoke_base_agent
 except ImportError:
   from src.agents.student_agent.student_agent import invoke_student_agent
-  from src.agents.utils.parse_json_to_prompt import parse_json_to_prompt
+  from src.agents.utils.parse_json_context_to_prompt import parse_json_to_prompt
   from src.agents.base_agent.base_agent import invoke_base_agent
 import os
 

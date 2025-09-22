@@ -1,13 +1,19 @@
-ARG PYTHON_VERSION=3.11
+ARG PYTHON_VERSION=3.13
 
 FROM public.ecr.aws/lambda/python:${PYTHON_VERSION}
 
 # Set working directory
 WORKDIR ${LAMBDA_TASK_ROOT}
 
-RUN pip install --upgrade pip && yum install -y git
+RUN pip install --upgrade pip 
+RUN dnf install -y git \
+    && dnf install -y \
+      gcc \
+      gcc-c++ \
+      make \
+      python3-devel \
+    && dnf clean all
 
-# Install dependencies into the virtual environment
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 

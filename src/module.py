@@ -3,10 +3,10 @@ from typing import Any
 from lf_toolkit.chat import ChatResult as Result, ChatParams as Params
 
 try:
-    from .agents.utils.parse_json_to_prompt import parse_json_to_prompt
+    from .agents.utils.parse_json_context_to_prompt import parse_json_to_prompt
     from .agents.base_agent.base_agent import invoke_base_agent
 except ImportError:
-    from src.agents.utils.parse_json_to_prompt import parse_json_to_prompt
+    from src.agents.utils.parse_json_context_to_prompt import parse_json_to_prompt
     from src.agents.base_agent.base_agent import invoke_base_agent
 
 def chat_module(message: Any, params: Params) -> Result:
@@ -17,7 +17,7 @@ def chat_module(message: Any, params: Params) -> Result:
 
     - `message` which is the message sent by the student.
     - `params` which are any extra parameters that may be useful,
-        e.g., conversation history and summary, conversational style of user, conversation id, agent type.
+        e.g., conversation history and summary, conversational style of user, conversation id.
 
     The output of this function is what is returned as the API response
     and therefore must be JSON-encodable. It must also conform to the

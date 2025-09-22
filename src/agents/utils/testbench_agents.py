@@ -5,10 +5,10 @@
 
 import json
 try:
-    from .parse_json_to_prompt import parse_json_to_prompt
+    from .parse_json_context_to_prompt import parse_json_to_prompt
     from ..base_agent.base_agent import invoke_base_agent
 except ImportError:
-    from src.agents.utils.parse_json_to_prompt import parse_json_to_prompt
+    from src.agents.utils.parse_json_context_to_prompt import parse_json_to_prompt
     from src.agents.base_agent.base_agent import invoke_base_agent
 
 # File path for the input text
