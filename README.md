@@ -62,7 +62,13 @@ git clone <repository-url>
 
 You're ready to start developing your chat function. Head over to the [Development](#development) section to learn more.
 
-#### 4. Update the README
+#### 4. Deploy the chat function
+
+You will have to add your API key and LLM model name into the Github repo settings. Under `Secrets and variables/Actions`: the API key must be added as a secret and the LLM model must be added as a variable.
+
+You must ensure the same namings as in your `.env` file. So, make sure to update the `.github/{dev and main}.yml` files with the correct parameter names. 
+
+#### 5. Update the README
 
 In the `README.md` file, change the title and description so it fits the purpose of your chat function.
 
