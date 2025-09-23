@@ -68,6 +68,8 @@ You will have to add your API key and LLM model name into the Github repo settin
 
 You must ensure the same namings as in your `.env` file. So, make sure to update the `.github/{dev and main}.yml` files with the correct parameter names. 
 
+For more information, check the section below [Deploy to Lambda Feedback](#deploy-to-lambda-feedback).
+
 #### 5. Update the README
 
 In the `README.md` file, change the title and description so it fits the purpose of your chat function.
@@ -187,6 +189,8 @@ During development, we recommend using the **`dev`** branch. This branch will de
 > [!WARNING] The dev environment of the platform is always under use, so the platform might have beta/in-testing features that might cause unexpected issues.
 
 After you are pleased with the performance of your Chatbot and have configured the repository, a [GitHub Actions workflow](.github/workflows/main.yml) will automatically build and deploy the chat function to Lambda Feedback as soon as changes are pushed to the main branch of the repository. This deployment will upload the function onto `staging.lambdafeedback.com`, and will also initiate an `approval` stage for prod environment. Once you reach this stage, please contact an admin from Lambda Feedback to review the code and approve it such that the code can be accessible onto the main [Lambda Feedback platform](https://www.lambdafeedback.com/).
+
+> [!NOTE] Once the deployment in the **`dev`** or **`main`** branch has been successful, share your necessary environment variables (e.g. API key and LLM model) with one of the Lambda Feedback team member.
 
 ## Troubleshooting
 
