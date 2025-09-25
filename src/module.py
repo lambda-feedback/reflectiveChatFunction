@@ -6,11 +6,13 @@ from lf_toolkit.chat.params import ChatParams as Params
 try:
     from .agents.utils.parse_json_context_to_prompt import parse_json_to_prompt
     from .agents.base_agent.base_agent import invoke_base_agent
+    from .agents.utils.types import JsonType
 except ImportError:
     from src.agents.utils.parse_json_context_to_prompt import parse_json_to_prompt
     from src.agents.base_agent.base_agent import invoke_base_agent
+    from src.agents.utils.types import JsonType
 
-def chat_module(message: Any, params: Params) -> Result:
+def chat_module(message: Any, params: Params) -> JsonType:
     """
     Function used by student to converse with a chatbot.
     ---

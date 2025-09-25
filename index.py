@@ -47,7 +47,7 @@ def handler(event: JsonType, context):
     # Create a response
     response = {
         "statusCode": 200,
-        "body": chatbot_response
+        "body": json.dumps(chatbot_response)
     }
 
     # Log the response for debugging purposes
