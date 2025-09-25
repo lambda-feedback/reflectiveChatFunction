@@ -27,7 +27,7 @@ try:
       STEP 2: Extract the parameters from the JSON
     """
     # NOTE: #### This is the testing message!! #####
-    message = "Hi" 
+    message = "Hi, how do I solve this problem?" 
     # NOTE: ########################################
 
     # replace "mock" in the message and conversation history with the actual message
