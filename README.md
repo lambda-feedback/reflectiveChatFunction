@@ -1,6 +1,6 @@
-# Lambda Feedback Chat Function Boilerplate
+# reflectiveChatFunction
 
-This repository contains the code needed to develop a modular chatbot to be used on Lambda-Feedback platform [written in Python].
+This repository contains the code for a modular chatbot to be used on Lambda-Feedback platform [written in Python].
 
 ## Quickstart
 

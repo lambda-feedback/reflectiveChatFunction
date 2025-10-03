@@ -1,14 +1,40 @@
-# YourFunctionName
-*Brief description of what this chat function does, from the developer perspective*
+# reflectiveChatFunction
+This chatbot aims to respond to all relevant tasks the student requests by emphasising self-reflection through asking the student follow-up questions. The Chatbot is aware of the Question details, answer, worked solution and guidance from the lecturer.
+
+Some technical details:
+<pre style="white-space: pre-wrap;">
+<code>LLM model: gpt-4o-mini (OpenAI)
+response time (on average): 10 seconds
+
+Helping approach: always responds with a follow-up question
+</code>
+</pre>
 
 ## Inputs
-*Specific input parameters which can be supplied when the calling this chat function.*
+Body:
+```JSON
+{
+    "message":"hi",
+    "params":{
+        "conversation_id":"12345Test",
+        "conversation_history":[{"type":"user","content":"hi"}],
+        "include_test_data": true,
+    }
+}
+```
 
 ## Outputs
-*Output schema/values for this function*
-
-## Examples
-*List of example inputs and outputs for this function, each under a different sub-heading*
+```JSON
+{
+    "chatbotResponse":"hi back",
+    "metadata": {
+        "summary": "",
+        "conversational_style": "",
+        "conversation_history": [],
+    },
+    "processing_time": 0
+}
+```
 
 ## Testing the Chat Function
 
