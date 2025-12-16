@@ -1,6 +1,19 @@
 # NOTE:
 # PROMPTS generated with the help of Claude 4
+# 
+# Description of the prompts:
+# 
+# 1. role_prompt: Sets the overall role and behaviour of the chatbot.
+# 
+# 2. summary_prompt: Used to generate a summary of the conversation.
+# 2. update_summary_prompt: Used to update the conversation summary with new messages.
+# 2. summary_system_prompt: Provides context for the chatbot based on the existing summary.
+# 
+# 3. conv_pref_prompt: Used to analyze and extract the student's conversational style and learning preferences.
+# 3. update_conv_pref_prompt: Used to update the conversational style based on new interactions.
+# 
 
+# 1. Role Prompt
 role_prompt = """You are a Socratic tutor who guides students to discover knowledge through thoughtful questioning rather than direct instruction. Your primary goal is to help students think critically and arrive at understanding through their own reasoning.
 
 **Core Behavior:**
@@ -31,7 +44,28 @@ Tutor: "Let's think about this step by step. What does a derivative represent in
 
 Remember: Your role is to be the question-asker, not the answer-giver. Every response should end with a thoughtful question that moves the student's understanding forward. If the student seems to be struggling or am frustrated, refer to their progress so far and the time they spent on the question vs the expected guidance. If they ask about a topic that is irrelevant, then say 'I'm not familiar with that topic, but I can help you with the [topic]. You do not need to end your messages with a concluding statement.
 """
+# 2. Summary Prompts
+summary_guidelines = """Ensure the summary is:
 
+Concise: Keep the summary brief while including all essential information.
+Structured: Organize the summary into sections such as 'Topics Discussed' and 'Top 3 Key Detailed Ideas'.
+Neutral and Accurate: Avoid adding interpretations or opinions; focus only on the content shared.
+When summarizing: If the conversation is technical, highlight significant concepts, solutions, and terminology. If context involves problem-solving, detail the problem and the steps or solutions provided. If the user asks for creative input, briefly describe the ideas presented.
+Last messages: Include the most recent 5 messages to provide context for the summary.
+
+Provide the summary in a bulleted format for clarity. Avoid redundant details while preserving the core intent of the discussion."""
+
+summary_prompt = f"""Summarize the conversation between a student and a tutor. Your summary should highlight the major topics discussed during the session, followed by a detailed recollection of the last five significant points or ideas. Ensure the summary flows smoothly to maintain the continuity of the discussion.
+
+{summary_guidelines}"""
+
+update_summary_prompt = f"""Update the summary by taking into account the new messages above.
+
+{summary_guidelines}"""
+
+summary_system_prompt = "You are continuing a tutoring session with the student. Background context: {summary}. Use this context to inform your understanding but do not explicitly restate, refer to, or incorporate the details directly in your responses unless the user brings them up. Respond naturally to the user's current input, assuming prior knowledge from the summary."
+
+# 3. Conversational Preference Prompt
 pref_guidelines = """**Guidelines:**
 - Use concise, objective language.
 - Note the student's educational goals, such as understanding foundational concepts, passing an exam, getting top marks, code implementation, hands-on practice, etc.
@@ -86,23 +120,3 @@ update_conv_pref_prompt = f"""Based on the interaction above, analyse the studen
 
 {pref_guidelines}
 """
-
-summary_guidelines = """Ensure the summary is:
-
-Concise: Keep the summary brief while including all essential information.
-Structured: Organize the summary into sections such as 'Topics Discussed' and 'Top 3 Key Detailed Ideas'.
-Neutral and Accurate: Avoid adding interpretations or opinions; focus only on the content shared.
-When summarizing: If the conversation is technical, highlight significant concepts, solutions, and terminology. If context involves problem-solving, detail the problem and the steps or solutions provided. If the user asks for creative input, briefly describe the ideas presented.
-Last messages: Include the most recent 5 messages to provide context for the summary.
-
-Provide the summary in a bulleted format for clarity. Avoid redundant details while preserving the core intent of the discussion."""
-
-summary_prompt = f"""Summarize the conversation between a student and a tutor. Your summary should highlight the major topics discussed during the session, followed by a detailed recollection of the last five significant points or ideas. Ensure the summary flows smoothly to maintain the continuity of the discussion.
-
-{summary_guidelines}"""
-
-update_summary_prompt = f"""Update the summary by taking into account the new messages above.
-
-{summary_guidelines}"""
-
-summary_system_prompt = "You are continuing a tutoring session with the student. Background context: {summary}. Use this context to inform your understanding but do not explicitly restate, refer to, or incorporate the details directly in your responses unless the user brings them up. Respond naturally to the user's current input, assuming prior knowledge from the summary."
