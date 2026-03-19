@@ -96,6 +96,7 @@ def _build_question_information(context: dict) -> dict:
         "questionTitle": question_data.get("title"),
         "questionGuidance": question_data.get("guidance"),
         "questionContent": question_data.get("content"),
+        "estimatedTime": question_data.get("estimatedTime"),
         "durationLowerBound": None,
         "durationUpperBound": None,
         "parts": [

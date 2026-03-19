@@ -56,7 +56,9 @@ Please tell me about the question you're working on. I'll use British English sp
         
         # Duration formatting
         duration_text = "- Expected Duration: "
-        if question_info.get('duration_lower') and question_info.get('duration_upper'):
+        if question_info.get('estimated_time'):
+            duration_text += question_info['estimated_time']
+        elif question_info.get('duration_lower') and question_info.get('duration_upper'):
             duration_text += f"{question_info['duration_lower']}-{question_info['duration_upper']} minutes"
         else:
             duration_text += "Not specified"

@@ -97,6 +97,7 @@ class QuestionDetails:
         questionTitle: Optional[str] = None,
         questionGuidance: Optional[str] = None,
         questionContent: Optional[str] = None,
+        estimatedTime: Optional[str] = None,
         durationLowerBound: Optional[int] = None,
         durationUpperBound: Optional[int] = None,
         parts: Optional[List[PartDetails]] = [],
@@ -108,6 +109,7 @@ class QuestionDetails:
         self.questionTitle = questionTitle
         self.questionGuidance = questionGuidance
         self.questionContent = questionContent
+        self.estimatedTime = estimatedTime
         self.durationLowerBound = durationLowerBound
         self.durationUpperBound = durationUpperBound
         self.parts = [PartDetails(**part) for part in parts] 
@@ -193,6 +195,7 @@ def parse_json_to_structured_prompt(
         'title': question_info.questionTitle,
         'guidance': question_info.questionGuidance,
         'content': question_info.questionContent,
+        'estimated_time': question_info.estimatedTime,
         'duration_lower': question_info.durationLowerBound,
         'duration_upper': question_info.durationUpperBound
     }
