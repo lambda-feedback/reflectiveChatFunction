@@ -174,18 +174,18 @@ Use British English spellings.
     def _format_student_submissions(student_work: Dict[str, Any]) -> str:
         """Format student submission history."""
         if not student_work.get('has_submissions'):
-            return "- Your Work: No responses submitted yet"
+            return "- Your Work on this response area: No response submitted yet"
         
         latest = student_work.get('latest_response', 'None')
         feedback = student_work.get('latest_feedback', 'None')
         total = student_work.get('total_submissions', 0)
         wrong = student_work.get('total_wrong', 0)
         
-        return f"""- Your Work:
+        return f"""- Your Work on this response area:
   - Latest response: {latest}
   - Latest feedback: {feedback}
-  - Total attempts: {total}
-  - Incorrect attempts: {wrong}"""
+  - Total attempts on this response area: {total}
+  - Incorrect attempts on this response area: {wrong}"""
 
     @staticmethod
     def format_part_answer(answer_content: Optional[str]) -> str:

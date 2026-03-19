@@ -181,7 +181,8 @@ def invoke_base_agent(query: str, conversation_history: list, summary: str, conv
     print(f'in invoke_base_agent(), thread_id = {session_id}')
 
     config = {"configurable": {"thread_id": session_id, "summary": summary, "conversational_style": conversationalStyle, "question_response_details": question_response_details}}
-    response_events = agent.app.invoke({"messages": conversation_history, "summary": summary, "conversational_style": conversationalStyle}, config=config, stream_mode="values") #updates
+    messages = conversation_history + [HumanMessage(content=query)]
+    response_events = agent.app.invoke({"messages": messages, "summary": summary, "conversational_style": conversationalStyle}, config=config, stream_mode="values") #updates
     pretty_printed_response = agent.pretty_response_value(response_events) # get last event/ai answer in the response
 
     # Gather Metadata from the agent

@@ -2,6 +2,17 @@ import unittest
 import json
 from index import handler
 
+
+def make_event(body: dict) -> dict:
+    return {"body": json.dumps(body)}
+
+
+BASE_BODY = {
+    "messages": [{"role": "USER", "content": "Hello, World"}],
+    "conversationId": "1234Test",
+}
+
+
 class TestChatIndexFunction(unittest.TestCase):
     """
     TestCase Class used to test the algorithm.
@@ -20,43 +31,26 @@ class TestChatIndexFunction(unittest.TestCase):
     Use module() to check your algorithm works
     as it should.
 
-    The expected input of the hander is a JsonType.
+    The expected input of the handler is a JsonType matching ChatRequest.
     """
 
-    def test_missing_argument(self):
-        arguments = ["message", "params"]
+    def test_missing_messages(self):
+        # messages is required — omitting it should return 400
+        body = {k: v for k, v in BASE_BODY.items() if k != "messages"}
+        result = handler(make_event(body), None)
+        self.assertEqual(result.get("statusCode"), 400)
 
-        for arg in arguments:
-            event = {
-                "message": "Hello, World",
-                "params": {"conversation_id": "1234Test", "conversation_history": [{"type": "user", "content": "Hello, World"}]}
-            }
-            event.pop(arg)
-            event = {"body":json.dumps(event)}
+    def test_invalid_json_body(self):
+        result = handler({"body": "not valid json"}, None)
+        self.assertEqual(result.get("statusCode"), 400)
 
-            result = handler(event, None)
-
-            self.assertEqual(result.get("statusCode"), 400)
-    
     def test_correct_arguments(self):
-        event = {
-            "message": "Hello, World",
-            "params": {"conversation_id": "1234Test", "conversation_history": [{"type": "user", "content": "Hello, World"}]}
-        }
-        event = {"body":json.dumps(event)}
-
-        result = handler(event, None)
-
+        result = handler(make_event(BASE_BODY), None)
         self.assertEqual(result.get("statusCode"), 200)
 
     def test_correct_response(self):
-        event = {
-            "message": "Hello, World",
-            "params": {"conversation_id": "1234Test", "conversation_history": [{"type": "user", "content": "Hello, World"}]}
-        }
-        event = {"body":json.dumps(event)}
-
-        result = handler(event, None)
-
+        result = handler(make_event(BASE_BODY), None)
         self.assertEqual(result.get("statusCode"), 200)
-        
+        body = json.loads(result["body"])
+        self.assertIn("output", body)
+        self.assertIn("content", body["output"])

@@ -165,11 +165,10 @@ def parse_json_to_structured_prompt(
     
     if not question_information:
         return PromptFormatter.format_error_message()
-    
-    # Convert to proper objects
-    submission_summary = [StudentWorkResponseArea(**summary) for summary in question_submission_summary]
-    question_info = QuestionDetails(**question_information)
-    access_info = QuestionAccessInformation(**question_access_information) if question_access_information else None
+
+    submission_summary = question_submission_summary
+    question_info = question_information
+    access_info = question_access_information
     
     # TODO: EXPERIMENTAL - Remove later
     # if question_info.setNumber is not None:
@@ -181,7 +180,7 @@ def parse_json_to_structured_prompt(
     
     # 1. Question Header
     current_part_letter = None
-    if access_info and access_info.currentPart:
+    if access_info and access_info.currentPart and access_info.currentPart.position is not None:
         current_part_letter = PromptFormatter.get_part_letter(access_info.currentPart.position)
     
     set_info = {

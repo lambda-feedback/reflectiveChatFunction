@@ -1,7 +1,16 @@
 import unittest
-from lf_toolkit.chat.result import ChatResult as Result
-from lf_toolkit.chat.params import ChatParams as Params
+from lf_toolkit.chat import ChatRequest, ChatResponse
 from src.module import chat_module
+
+
+def make_request(**kwargs):
+    defaults = {
+        "messages": [{"role": "USER", "content": "Hello, World"}],
+        "conversationId": "1234Test",
+    }
+    defaults.update(kwargs)
+    return ChatRequest.model_validate(defaults)
+
 
 class TestChatModuleFunction(unittest.TestCase):
     """
@@ -22,63 +31,32 @@ class TestChatModuleFunction(unittest.TestCase):
     as it should.
     """
 
-    def test_missing_parameters(self):
-        # Checking state for missing parameters on default agent
-        response = "Hello, World"
-        expected_params = Params(include_test_data=True, conversation_history=['{ "type": "user", "content": response }'], \
-                                    summary="", conversational_style="", \
-                                    question_response_details={}, conversation_id="1234Test")
+    def test_missing_conversation_id(self):
+        # conversationId is required by chat_module even though it's optional in ChatRequest
+        request = make_request(conversationId=None)
 
-        for p in expected_params:
-            params = expected_params.copy()
-            # except for the special parameters
-            if p not in ["include_test_data", "conversation_id", "conversation_history"]:
-                params.pop(p)
+        with self.assertRaises(Exception) as cm:
+            chat_module(request)
 
-                result = chat_module(response, params)
-
-                self.assertIsNotNone(result)
-                self.assertEqual("error" in result, False)
-            elif p == "include_test_data":
-                params.pop(p)
-
-                result = chat_module(response, params)
-
-                # check if result has nothing except for the chatbot_response
-                self.assertIsNotNone(result.get("chatbot_response"))
-                self.assertEqual(len(result), 1)
-            elif p == "conversation_id":
-                params.pop(p)
-                
-                with self.assertRaises(Exception) as cm:
-                    chat_module(response, params)
-
-                self.assertTrue("Internal Error" in str(cm.exception))
-                self.assertTrue("conversation id" in str(cm.exception))
-            elif p == "conversation_history":
-                params.pop(p)
-
-                with self.assertRaises(Exception) as cm:
-                    chat_module(response, params)
-
-                self.assertTrue("Internal Error" in str(cm.exception))
-                self.assertTrue("conversation history" in str(cm.exception))
+        self.assertIn("Internal Error", str(cm.exception))
+        self.assertIn("conversation id", str(cm.exception))
 
     def test_agent_output(self):
         # Checking the output of the agent
-        response = "Hello, World"
-        params = Params(conversation_id="1234Test", conversation_history=['{ "type": "user", "content": response }'])
+        request = make_request()
 
-        result = chat_module(response, params)
+        result = chat_module(request)
 
-        self.assertIsNotNone(result.get("chatbot_response"))
+        self.assertIsInstance(result, ChatResponse)
+        self.assertIsNotNone(result.output)
+        self.assertIsNotNone(result.output.content)
 
-    def test_processing_time_calc(self):
-        # Checking the processing time calculation
-        response = "Hello, World"
-        params = Params(include_test_data=True, conversation_id="1234Test", conversation_history=['{ "type": "user", "content": response }'])
+    def test_processing_time_in_metadata(self):
+        # Checking the processing time is included in the response metadata
+        request = make_request()
 
-        result = chat_module(response, params)
+        result = chat_module(request)
 
-        self.assertIsNotNone(result.get("processing_time"))
-        self.assertGreaterEqual(result.get("processing_time"), 0)
+        self.assertIsNotNone(result.metadata)
+        self.assertIn("processingTimeMs", result.metadata)
+        self.assertGreaterEqual(result.metadata["processingTimeMs"], 0)
