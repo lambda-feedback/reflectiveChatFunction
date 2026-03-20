@@ -203,7 +203,6 @@ Body with optional fields:
       "conversationalStyle": "<stored style string>"
     },
     "taskProgress": {
-      "currentQuestionId": "<question uuid>",
       "timeSpentOnQuestion": "30 minutes",
       "accessStatus": "a good amount of time spent on this question today.",
       "markedDone": "This question is still being worked on.",
@@ -245,10 +244,10 @@ Body with optional fields:
           "content": "<part prompt>",
           "answerContent": "<part answer>",
           "workedSolutionSections": [
-            { "id": "<uuid>", "position": 0, "title": "Step 1", "content": "..." }
+            { "position": 0, "title": "Step 1", "content": "..." }
           ],
           "structuredTutorialSections": [
-            { "id": "<uuid>", "position": 0, "title": "Hint", "content": "..." }
+            { "position": 0, "title": "Hint", "content": "..." }
           ],
           "responseAreas": [
             {
