@@ -2,24 +2,20 @@
   "conversationId": "9e6b84b8-9aed-4145-ae1a-2f4d315e7601",
   "messages": [{ "role": "USER", "content": "help" }],
   "user": {
-    "userId": "a6632248-578b-4976-9d42-7daea459a905",
     "type": "LEARNER",
     "preference": {
       "conversationalStyle": "student prefers direct and short responses"
     },
     "taskProgress": {
-      "currentQuestionId": "f30c29ad-a7f6-45d0-8713-cb0686ca6a0e",
       "timeSpentOnQuestion": "less than one minute",
       "accessStatus": "",
       "markedDone": "This question is still being worked on.",
       "currentPart": {
-        "partId": "a51a1908-03cd-4bd9-8bbe-62d94ec2b3d1",
         "position": 0,
         "timeSpentOnPart": "less than one minute",
         "markedDone": "This part is marked done.",
         "responseAreas": [
           {
-            "responseAreaId": "a30d1dd3-1255-42c6-a1ac-37437476f816",
             "responseType": "NUMERIC_UNITS",
             "totalSubmissions": 3,
             "wrongSubmissions": 2,
@@ -44,13 +40,11 @@
       "estimatedTime": "10 minutes",
       "parts": [
         {
-          "partId": "a51a1908-03cd-4bd9-8bbe-62d94ec2b3d1",
           "position": 0,
           "content": "Calculate the work he performs after pulling the child for $10\\\\text{m}$.&#x20;\\n",
           "answerContent": "$W = 939.7\\\\text{J}$\\n",
           "workedSolutionSections": [
             {
-              "id": "ad3060af-4040-45d7-b0d5-ce47497b86f3",
               "position": 0,
               "title": "",
               "content": "We require the force component parallel to the direction of travel, and so $W = \\\\vec{F}\\\\cdot\\\\vec{d}$ (the projection of $\\\\vec{F}$ onto $\\\\vec{d}$) (**section 1.11**). Hence applying the dot product definition to evaluate this (**section 1.8**):\\n\\n***\\n\\n$$\\n\\\\begin{aligned}\\nW & = \\\\vec{F}\\\\cdot \\\\vec{d} \\\\\\\\\\n& = 100\\\\cdot10\\\\cos\\\\theta \\\\\\\\\\n& = 939.7\\\\text{J} \\n\\\\end{aligned}\\n$$\\n"
@@ -58,7 +52,6 @@
           ],
           "structuredTutorialSections": [
             {
-              "id": "a6044ac0-f7f3-4a07-ac94-cb3e00cc732e",
               "position": 0,
               "title": null,
               "content": "Can you express the work done as a dot product (**section 1.11**)?\\n\\n\\n***\\n\\nEvaluate the dot product using the dot product definition (**section 1.8**).\\n"
@@ -66,7 +59,6 @@
           ],
           "responseAreas": [
             {
-              "responseAreaId": "a30d1dd3-1255-42c6-a1ac-37437476f816",
               "position": 0,
               "responseType": "NUMERIC_UNITS",
               "answer": "939.7 J",
@@ -75,13 +67,11 @@
           ]
         },
         {
-          "partId": "af21b774-5a07-48aa-9c90-398718f6b831",
           "position": 1,
           "content": "Why does he not pull at a shallower angle (closer to the horizontal)?\\n",
           "answerContent": "",
           "workedSolutionSections": [
             {
-              "id": "4f00f976-044b-4d40-9a14-0aa8d8c52221",
               "position": 0,
               "title": "",
               "content": "Pulling at a shallower angle (closer to horizontal) would require less work or allow him to pull less strongly, but it reduces the reaction force that he feels too, which reduces his maximum pulling force, and also allow him to gain more leverage as he pulls (he can lean forward and use his weight to pull whilst pivoted at his feet).&#x20;\\n"
@@ -90,7 +80,6 @@
           "structuredTutorialSections": [],
           "responseAreas": [
             {
-              "responseAreaId": "202a362a-382e-4093-bd31-5531f9f677e1",
               "position": 0,
               "responseType": "MULTIPLE_CHOICE",
               "answer": [

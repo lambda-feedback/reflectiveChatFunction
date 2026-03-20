@@ -67,8 +67,8 @@ class TestExampleInputLoading:
         assert q_info.questionContent == q_data.get("content")
         assert len(q_info.parts) == len(q_data.get("parts", []))
 
-    def test_parts_load_with_correct_ids_and_positions(self, path):
-        """Each part's partId and position are preserved after transform."""
+    def test_parts_load_with_correct_positions(self, path):
+        """Each part's position is preserved after transform."""
         data = load_example(path)
         context = data.get("context", {})
         if not context.get("question"):
@@ -76,13 +76,11 @@ class TestExampleInputLoading:
 
         q_info = QuestionDetails(**_build_question_information(context))
         for part_obj, part_raw in zip(q_info.parts, context["question"].get("parts", [])):
-            assert part_obj.publishedPartId == part_raw["partId"], \
-                f"partId mismatch: {part_obj.publishedPartId} != {part_raw['partId']}"
             assert part_obj.publishedPartPosition == part_raw["position"], \
-                f"position mismatch for part {part_raw['partId']}"
+                f"position mismatch for part at position {part_raw['position']}"
 
-    def test_response_areas_load_with_correct_ids_and_answers(self, path):
-        """Each responseArea's id, position, and answer are preserved after transform."""
+    def test_response_areas_load_with_correct_positions_and_answers(self, path):
+        """Each responseArea's position and answer are preserved after transform."""
         data = load_example(path)
         context = data.get("context", {})
         if not context.get("question"):
@@ -91,29 +89,25 @@ class TestExampleInputLoading:
         q_info = QuestionDetails(**_build_question_information(context))
         for part_obj, part_raw in zip(q_info.parts, context["question"]["parts"]):
             for ra_obj, ra_raw in zip(part_obj.publishedResponseAreas, part_raw.get("responseAreas", [])):
-                expected_id = ra_raw["responseAreaId"]
-                assert ra_obj.universalResponseAreaId == expected_id, \
-                    f"responseAreaId mismatch in part {part_raw['partId']}: got {ra_obj.universalResponseAreaId}"
                 assert ra_obj.position == ra_raw["position"], \
-                    f"responseArea position mismatch for {expected_id}"
+                    f"responseArea position mismatch at position {ra_raw['position']}"
                 assert ra_obj.answer == ra_raw["answer"], \
-                    f"answer mismatch for {expected_id}"
+                    f"answer mismatch at position {ra_raw['position']}"
 
     def test_submission_summary_fields(self, path):
-        """Submission responseAreaId, counts, and latestSubmission feedback survive the transform."""
+        """Submission position, counts, and latestSubmission feedback survive the transform."""
         submissions_raw = _get_submissions(load_example(path))
         if not submissions_raw:
             pytest.skip("no submissions in this example")
 
         summaries = [StudentWorkResponseArea(**s) for s in _build_submission_summary(submissions_raw)]
-        for summary, s_raw in zip(summaries, submissions_raw):
-            expected_id = s_raw["responseAreaId"]
-            assert summary.publishedResponseAreaId == expected_id, \
-                f"responseAreaId mismatch: got {summary.publishedResponseAreaId}"
+        for i, (summary, s_raw) in enumerate(zip(summaries, submissions_raw)):
+            assert summary.publishedResponseAreaPosition == i, \
+                f"responseAreaPosition mismatch: expected {i}, got {summary.publishedResponseAreaPosition}"
             assert summary.totalSubmissions == s_raw["totalSubmissions"], \
-                f"totalSubmissions mismatch for {expected_id}"
+                f"totalSubmissions mismatch at position {i}"
             assert summary.totalWrongSubmissions == s_raw["wrongSubmissions"], \
-                f"wrongSubmissions mismatch for {expected_id}"
+                f"wrongSubmissions mismatch at position {i}"
 
             ls_raw = s_raw.get("latestSubmission")
             if ls_raw:
@@ -124,7 +118,7 @@ class TestExampleInputLoading:
                 assert summary.latestSubmission is None
 
     def test_access_information_fields(self, path):
-        """taskProgress fields (timeTaken, accessStatus, currentPart id/position) are preserved."""
+        """taskProgress fields (timeTaken, accessStatus, currentPart position) are preserved."""
         data = load_example(path)
         task_progress = _get_task_progress(data)
         if not task_progress:
@@ -135,7 +129,6 @@ class TestExampleInputLoading:
 
         assert access_info.timeTaken == task_progress.get("timeSpentOnQuestion")
         assert access_info.accessStatus == task_progress.get("accessStatus")
-        assert access_info.currentPart.id == current_part_raw.get("partId")
         assert access_info.currentPart.position == current_part_raw.get("position")
         assert access_info.currentPart.timeTakenPart == current_part_raw.get("timeSpentOnPart")
 

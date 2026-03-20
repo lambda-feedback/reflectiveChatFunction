@@ -9,13 +9,11 @@ from src.agent.utils.prompt_context_templates import PromptFormatter
 class StudentLatestSubmission:
     def __init__(
         self,
-        universalResponseAreaId: Optional[str] = None,
         answer: Optional[str] = None,
         submission: Optional[str] = None,
         feedback: Optional[str] = None,
         rawResponse: Optional[dict] = None,
     ):
-        self.universalResponseAreaId = universalResponseAreaId
         self.answer = answer
         self.submission = submission
         self.feedback = feedback
@@ -24,11 +22,8 @@ class StudentLatestSubmission:
 class StudentWorkResponseArea:
     def __init__(
         self,
-        publishedPartId: Optional[str] = None,
         publishedPartPosition: Optional[int] = None,
-        publishedResponseAreaId: Optional[str] = None,
         publishedResponseAreaPosition: Optional[int] = None,
-        responseAreaUniversalId: Optional[str] = None,
         publishedResponseAreaPreResponseText: Optional[str] = None,
         publishedResponseType: Optional[str] = None,
         publishedResponseConfig: Optional[dict] = None,
@@ -36,11 +31,8 @@ class StudentWorkResponseArea:
         totalWrongSubmissions: Optional[int] = None,
         latestSubmission: Optional[StudentLatestSubmission] = None,
     ):
-        self.publishedPartId = publishedPartId
         self.publishedPartPosition = publishedPartPosition
-        self.publishedResponseAreaId = publishedResponseAreaId
         self.publishedResponseAreaPosition = publishedResponseAreaPosition
-        self.responseAreaUniversalId = responseAreaUniversalId
         self.publishedResponseAreaPreResponseText = publishedResponseAreaPreResponseText
         self.publishedResponseType = publishedResponseType
         self.publishedResponseConfig = publishedResponseConfig
@@ -52,17 +44,13 @@ class StudentWorkResponseArea:
 class ResponseAreaDetails:
     def __init__(
         self,
-        id: Optional[str] = None,
         position: Optional[int] = None,
-        universalResponseAreaId: Optional[str] = None,
         preResponseText: Optional[str] = None,
         responseType: Optional[str] = None,
         answer: Optional[dict] = None,
         Response: Optional[dict] = None,
     ):
-        self.id = id
         self.position = position
-        self.universalResponseAreaId = universalResponseAreaId
         self.preResponseText = preResponseText
         self.responseType = responseType
         self.answer = answer
@@ -71,7 +59,6 @@ class ResponseAreaDetails:
 class PartDetails:
     def __init__(
         self,
-        publishedPartId: Optional[str] = None,
         publishedPartPosition: Optional[int] = None,
         publishedPartContent: Optional[str] = None,
         publishedPartAnswerContent: Optional[str] = None,
@@ -79,7 +66,6 @@ class PartDetails:
         publishedStructuredTutorialSections: Optional[List[dict]] = [],
         publishedResponseAreas: Optional[List[Optional[ResponseAreaDetails]]] = [],
     ):
-        self.publishedPartId = publishedPartId
         self.publishedPartPosition = publishedPartPosition
         self.publishedPartContent = publishedPartContent
         self.publishedPartAnswerContent = publishedPartAnswerContent
@@ -117,16 +103,12 @@ class QuestionDetails:
 # questionAccessInformation type
 class CurrentPart:
     def __init__(
-        self, 
-        id: str = None, 
-        position: int = None, 
-        universalPartId: Optional[str] = None,
-        timeTakenPart: Optional[str] = None, 
+        self,
+        position: int = None,
+        timeTakenPart: Optional[str] = None,
         markedDonePart: Optional[str] = None
     ):
-        self.id = id
         self.position = position
-        self.universalPartId = universalPartId
         self.timeTakenPart = timeTakenPart
         self.markedDonePart = markedDonePart
 
@@ -242,7 +224,7 @@ def _format_single_part(
     part_letter = PromptFormatter.get_part_letter(part.publishedPartPosition)
     
     # Determine if this is the current part
-    is_current = current_part and current_part.id == part.publishedPartId
+    is_current = current_part and current_part.position == part.publishedPartPosition
     time_on_part = current_part.timeTakenPart if is_current and current_part else None
     
     # 1. Part Header
@@ -305,7 +287,7 @@ def _extract_student_work_for_area(
     """Extract student work data for a specific response area."""
     
     for submission in submissions:
-        if (submission.publishedResponseAreaId == response_area.id and 
+        if (submission.publishedResponseAreaPosition == response_area.position and
             submission.latestSubmission):
             
             return {

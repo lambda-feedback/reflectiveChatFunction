@@ -198,7 +198,6 @@ Body with optional fields:
     { "role": "USER", "content": "<current message>" }
   ],
   "user": {
-    "userId": "<uid>",
     "type": "LEARNER",
     "preference": {
       "conversationalStyle": "<stored style string>"
@@ -209,13 +208,11 @@ Body with optional fields:
       "accessStatus": "a good amount of time spent on this question today.",
       "markedDone": "This question is still being worked on.",
       "currentPart": {
-        "partId": "<part uuid>",
         "position": 0,
         "timeSpentOnPart": "10 minutes",
         "markedDone": "This part is not marked done.",
         "responseAreas": [
           {
-            "responseAreaId": "<response area uuid>",
             "responseType": "EXPRESSION",
             "totalSubmissions": 3,
             "wrongSubmissions": 2,
@@ -256,7 +253,6 @@ Body with optional fields:
           ],
           "responseAreas": [
             {
-              "responseAreaId": "<response area uuid>",
               "position": 0,
               "responseType": "EXPRESSION",
               "answer": "<reference answer>",

@@ -7,24 +7,20 @@
     }
   ],
   "user": {
-    "userId": "c7e19a84-2b56-4f01-9a3e-1d08bc762345",
     "type": "LEARNER",
     "preference": {
       "conversationalStyle": "The student prefers concise answers with worked examples."
     },
     "taskProgress": {
-      "currentQuestionId": "a1b2c3d4-5e6f-7890-abcd-ef1234567890",
       "timeSpentOnQuestion": "13 minutes",
       "accessStatus": "too much time spent on this question.",
       "markedDone": "Part (a) was marked done.",
       "currentPart": {
-        "partId": "04d2cab2-eeca-4c1f-bcef-6401fe4ec635",
         "position": 0,
         "timeSpentOnPart": "10 minutes",
         "markedDone": "This part is not marked done.",
         "responseAreas": [
           {
-            "responseAreaId": "1194c5b3-1831-433e-b78e-c96c94f99117",
             "responseType": "MATRIX",
             "totalSubmissions": 1,
             "wrongSubmissions": 0,
@@ -35,7 +31,6 @@
             }
           },
           {
-            "responseAreaId": "4e354eda-fb78-4c26-a3ae-f8d1c06297a2",
             "responseType": "MATRIX",
             "totalSubmissions": 1,
             "wrongSubmissions": 1,
@@ -64,13 +59,11 @@
       "estimatedTime": "1-3 minutes",
       "parts": [
         {
-          "partId": "04d2cab2-eeca-4c1f-bcef-6401fe4ec635",
           "position": 0,
           "content": "",
           "answerContent": "",
           "workedSolutionSections": [
             {
-              "id": "9cb3a347-c05f-4101-b522-a0c6d2fbc6bf",
               "position": 1,
               "title": "",
               "content": "$$\n\\vec{a}+\\vec{b} = \\begin{bmatrix}-1 \\\\ 5\\\\ -1\\end{bmatrix}\n$$\n\nSince vector addition is commutative, $\\vec{b}+\\vec{a}=\\vec{a}+\\vec{b}$.\n"
@@ -79,14 +72,12 @@
           "structuredTutorialSections": [],
           "responseAreas": [
             {
-              "responseAreaId": "1194c5b3-1831-433e-b78e-c96c94f99117",
               "position": 0,
               "responseType": "MATRIX",
               "answer": [["-1"], ["5"], ["-1"]],
               "preResponseText": "$\\vec{a}+\\vec{b}=$"
             },
             {
-              "responseAreaId": "4e354eda-fb78-4c26-a3ae-f8d1c06297a2",
               "position": 1,
               "responseType": "MATRIX",
               "answer": [["-1"], ["5"], ["-1"]],
@@ -95,25 +86,21 @@
           ]
         },
         {
-          "partId": "dbe25bc9-6c42-4e58-aac7-d15a783ef337",
           "position": 1,
           "content": "",
           "answerContent": "",
           "workedSolutionSections": [
             {
-              "id": "7d696718-c6f5-4e11-a5fb-bd122c1274cf",
               "position": 1,
               "title": "$3\\vec{c}$",
               "content": "$$\n3\\vec{c} = \\begin{bmatrix}0 \\\\ 12\\\\ -3\\end{bmatrix}\n$$"
             },
             {
-              "id": "010b312d-2699-439f-bcab-9f8ac4b96114",
               "position": 2,
               "title": "$-\\vec{a}$",
               "content": "$$\n-\\vec{a} = \\begin{bmatrix}-1 \\\\ -2\\\\ -3\\end{bmatrix}\n$$"
             },
             {
-              "id": "20602e93-de57-4e69-afcd-e05f454155de",
               "position": 3,
               "title": "$\\frac{\\vec{b}}{2}$",
               "content": "$$\n\\frac{\\vec{b}}{2} = \\begin{bmatrix}-1 \\\\ 1.5\\\\ -2\\end{bmatrix}\n$$"
@@ -122,21 +109,18 @@
           "structuredTutorialSections": [],
           "responseAreas": [
             {
-              "responseAreaId": "85c33011-0e12-435c-944e-399043e92779",
               "position": 0,
               "responseType": "MATRIX",
               "answer": [["0"], ["12"], ["-3"]],
               "preResponseText": "$3\\vec{c}=$"
             },
             {
-              "responseAreaId": "ae4a9db7-ff54-489d-9a21-143621e6e7aa",
               "position": 1,
               "responseType": "MATRIX",
               "answer": [["-1"], ["-2"], ["-3"]],
               "preResponseText": "$-\\vec{a}=$"
             },
             {
-              "responseAreaId": "3ae38184-9dbc-4c5f-872b-75ddfd691b20",
               "position": 2,
               "responseType": "MATRIX",
               "answer": [["-1"], ["1.5"], ["-2"]],
@@ -145,19 +129,16 @@
           ]
         },
         {
-          "partId": "2cb9d565-8f1c-4901-bf2b-0b89f12ec9e2",
           "position": 2,
           "content": "",
           "answerContent": "",
           "workedSolutionSections": [
             {
-              "id": "8162a17d-bed7-48a9-b487-0bd6280a3988",
               "position": 1,
               "title": "$3\\vec{a}-3\\vec{c}$",
               "content": "$$\n3\\vec{a}-3\\vec{c} = \\begin{bmatrix}3 \\\\ -6\\\\ 12\\end{bmatrix}\n$$"
             },
             {
-              "id": "9d88d02a-e63d-40d0-8200-5d81718e2259",
               "position": 2,
               "title": "$3(\\vec{a}-\\vec{c})$",
               "content": "$$\n3(\\vec{a}-\\vec{c}) = \\begin{bmatrix}3 \\\\ -6\\\\ 12\\end{bmatrix}\n$$"
@@ -166,14 +147,12 @@
           "structuredTutorialSections": [],
           "responseAreas": [
             {
-              "responseAreaId": "6c64c869-358d-477d-b835-7c5e268b08b2",
               "position": 0,
               "responseType": "MATRIX",
               "answer": [["3"], ["-6"], ["12"]],
               "preResponseText": "$3\\vec{a}-3\\vec{c}=$"
             },
             {
-              "responseAreaId": "0b5d2dab-7c6d-4694-8c3b-56df1afaba96",
               "position": 1,
               "responseType": "MATRIX",
               "answer": [["3"], ["-6"], ["12"]],
@@ -182,13 +161,11 @@
           ]
         },
         {
-          "partId": "3ee15335-1bfc-466a-8fff-66abd742dc33",
           "position": 3,
           "content": "",
           "answerContent": "",
           "workedSolutionSections": [
             {
-              "id": "916cf686-7a41-4169-8fa2-b2e9d6924375",
               "position": 1,
               "title": "",
               "content": "$$\n-5(\\vec{a}+\\vec{c})+\\vec{b} = \\begin{bmatrix}-7 \\\\ -27\\\\ -14\\end{bmatrix}\n$$"
@@ -197,7 +174,6 @@
           "structuredTutorialSections": [],
           "responseAreas": [
             {
-              "responseAreaId": "8a4d3fed-e450-475d-a09b-1e58f8dbbbe2",
               "position": 0,
               "responseType": "MATRIX",
               "answer": [["-7"], ["-27"], ["-14"]],
@@ -206,13 +182,11 @@
           ]
         },
         {
-          "partId": "b2620eb0-9de6-404e-a82c-b4ad8e015d40",
           "position": 4,
           "content": "",
           "answerContent": "",
           "workedSolutionSections": [
             {
-              "id": "3d15fcbc-5173-4d89-a13a-3296c25680ec",
               "position": 1,
               "title": "",
               "content": "$$\n3\\vec{a}-2\\vec{c}+3\\vec{b} = \\begin{bmatrix}-3 \\\\ 7\\\\ -1\\end{bmatrix}\n$$"
@@ -221,7 +195,6 @@
           "structuredTutorialSections": [],
           "responseAreas": [
             {
-              "responseAreaId": "1a5fb3fb-001d-4ed5-9606-2a73fcae036c",
               "position": 0,
               "responseType": "MATRIX",
               "answer": [["-3"], ["7"], ["-1"]],
