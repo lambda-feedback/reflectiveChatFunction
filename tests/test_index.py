@@ -14,17 +14,6 @@ BASE_BODY = {
 }
 
 
-
-def make_event(body: dict) -> dict:
-    return {"body": json.dumps(body)}
-
-
-BASE_BODY = {
-    "messages": [{"role": "USER", "content": "Hello, World"}],
-    "conversationId": "1234Test",
-}
-
-
 class TestChatIndexFunction(unittest.TestCase):
 
     def test_missing_messages(self):

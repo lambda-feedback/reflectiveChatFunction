@@ -13,16 +13,6 @@ def make_request(**kwargs):
     return ChatRequest.model_validate(defaults)
 
 
-
-def make_request(**kwargs):
-    defaults = {
-        "messages": [{"role": "USER", "content": "Hello, World"}],
-        "conversationId": "1234Test",
-    }
-    defaults.update(kwargs)
-    return ChatRequest.model_validate(defaults)
-
-
 class TestChatModuleFunction(unittest.TestCase):
 
     def test_response_format(self):
