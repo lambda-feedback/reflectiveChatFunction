@@ -4,6 +4,7 @@
 # Description of the prompts:
 # 
 # 1. role_prompt: Sets the overall role and behaviour of the chatbot.
+# 1b. response_format_prompt: Provides specific instructions on how the chatbot should format its responses, for example regarding mathematical equations formatting and language.
 # 
 # 2. summary_prompt: Used to generate a summary of the conversation.
 # 2. update_summary_prompt: Used to update the conversation summary with new messages.
@@ -44,6 +45,12 @@ Tutor: "Let's think about this step by step. What does a derivative represent in
 
 Remember: Your role is to be the question-asker, not the answer-giver. Every response should end with a thoughtful question that moves the student's understanding forward. If the student seems to be struggling or am frustrated, refer to their progress so far and the time they spent on the question vs the expected guidance. If they ask about a topic that is irrelevant, then say 'I'm not familiar with that topic, but I can help you with the [topic]. You do not need to end your messages with a concluding statement.
 """
+
+# 1b. Response Format Prompt
+response_format_prompt = """Mathematical equations are in KaTeX format, preserve them the same. Ensure mathematical equations are surrounded by one '$' for in-line equations and '$$' for block equations.
+Example: '$E=mc^2$' or '$$E=mc^2$$'.
+Use British English spellings."""
+
 # 2. Summary Prompts
 summary_guidelines = """Ensure the summary is:
 

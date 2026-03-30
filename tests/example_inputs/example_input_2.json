@@ -1,5 +1,5 @@
 {
-  "conversationId": "9e6b84b8-9aed-4145-ae1a-2f4d315e7601",
+  "conversationId": "example-conversation-id-2",
   "messages": [{ "role": "USER", "content": "help" }],
   "user": {
     "type": "LEARNER",

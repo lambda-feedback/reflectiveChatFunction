@@ -1,164 +1,41 @@
-"""
-Verifies that all key attributes from the example input JSON files are correctly
-loaded through the parsing pipeline before being sent to the LLM.
-
-These tests do NOT call the LLM — they only exercise the data transformation
-layer (module.py helpers → typed objects → prompt string).
-"""
-
+import unittest
 import json
-import pytest
-from pathlib import Path
+import os
+from index import handler
+from tests.utils import assert_valid_chat_request, assert_valid_chat_response
 
-from lf_toolkit.chat import ChatRequest
-from src.agent.utils.parse_json_context_to_prompt import (
-    QuestionDetails,
-    StudentWorkResponseArea,
-    QuestionAccessInformation,
-    parse_json_to_prompt,
-)
-from src.module import (
-    _build_question_information,
-    _build_submission_summary,
-    _build_access_information,
-)
-
-EXAMPLE_INPUTS_DIR = Path("src/agent/utils/example_inputs")
-EXAMPLE_FILES = sorted(EXAMPLE_INPUTS_DIR.glob("example_input_*.json"))
+EXAMPLE_INPUTS_DIR = "tests/example_inputs"
 
 
-def load_example(path: Path) -> dict:
-    with open(path) as f:
-        return json.load(f)
+class TestExampleInputs(unittest.TestCase):
+    """
+    End-to-end tests for each example input in tests/example_inputs/.
+    Each file must be a valid muEd ChatRequest and produce a valid muEd ChatResponse.
+    """
 
+    def _test(self, filename: str):
+        with open(os.path.join(EXAMPLE_INPUTS_DIR, filename)) as f:
+            payload = json.load(f)
+        assert_valid_chat_request(self, payload)
+        result = handler({"body": json.dumps(payload)}, None)
+        assert_valid_chat_response(self, result)
+        return payload, json.loads(result["body"])
 
-def _get_task_progress(data: dict) -> dict:
-    return ((data.get("user") or {}).get("taskProgress") or {})
+    def test_example_input_0_simple(self):
+        self._test("example_input_0.json")
 
+    def test_example_input_1(self):
+        self._test("example_input_1.json")
 
-def _get_submissions(data: dict) -> list:
-    return _get_task_progress(data).get("currentPart", {}).get("responseAreas", [])
+    def test_example_input_2_metadata_persists(self):
+        """Example input 2 has an existing summary and conversationalStyle — verifies they persist in the response."""
+        payload, result_body = self._test("example_input_2.json")
+        self.assertEqual(result_body["metadata"]["summary"], payload["context"]["summary"])
+        self.assertEqual(result_body["metadata"]["conversationalStyle"], payload["user"]["preference"]["conversationalStyle"])
 
-
-# ---------------------------------------------------------------------------
-# Parametrize over all example files
-# ---------------------------------------------------------------------------
-
-@pytest.mark.parametrize("path", EXAMPLE_FILES, ids=[p.name for p in EXAMPLE_FILES])
-class TestExampleInputLoading:
-
-    def test_parses_as_valid_chat_request(self, path):
-        """JSON can be validated as a ChatRequest without errors."""
-        data = load_example(path)
-        request = ChatRequest.model_validate(data)
-        assert len(request.messages) >= 1
-
-    def test_question_information_fields(self, path):
-        """question.title, content, and part count survive the transform."""
-        data = load_example(path)
-        context = data.get("context", {})
-        if not context.get("question"):
-            pytest.skip("no question context")
-
-        q_data = context["question"]
-        q_info = QuestionDetails(**_build_question_information(context))
-
-        assert q_info.questionTitle == q_data.get("title")
-        assert q_info.questionContent == q_data.get("content")
-        assert len(q_info.parts) == len(q_data.get("parts", []))
-
-    def test_parts_load_with_correct_positions(self, path):
-        """Each part's position is preserved after transform."""
-        data = load_example(path)
-        context = data.get("context", {})
-        if not context.get("question"):
-            pytest.skip("no question context")
-
-        q_info = QuestionDetails(**_build_question_information(context))
-        for part_obj, part_raw in zip(q_info.parts, context["question"].get("parts", [])):
-            assert part_obj.publishedPartPosition == part_raw["position"], \
-                f"position mismatch for part at position {part_raw['position']}"
-
-    def test_response_areas_load_with_correct_positions_and_answers(self, path):
-        """Each responseArea's position and answer are preserved after transform."""
-        data = load_example(path)
-        context = data.get("context", {})
-        if not context.get("question"):
-            pytest.skip("no question context")
-
-        q_info = QuestionDetails(**_build_question_information(context))
-        for part_obj, part_raw in zip(q_info.parts, context["question"]["parts"]):
-            for ra_obj, ra_raw in zip(part_obj.publishedResponseAreas, part_raw.get("responseAreas", [])):
-                assert ra_obj.position == ra_raw["position"], \
-                    f"responseArea position mismatch at position {ra_raw['position']}"
-                assert ra_obj.answer == ra_raw["answer"], \
-                    f"answer mismatch at position {ra_raw['position']}"
-
-    def test_submission_summary_fields(self, path):
-        """Submission position, counts, and latestSubmission feedback survive the transform."""
-        submissions_raw = _get_submissions(load_example(path))
-        if not submissions_raw:
-            pytest.skip("no submissions in this example")
-
-        summaries = [StudentWorkResponseArea(**s) for s in _build_submission_summary(submissions_raw)]
-        for i, (summary, s_raw) in enumerate(zip(summaries, submissions_raw)):
-            assert summary.publishedResponseAreaPosition == i, \
-                f"responseAreaPosition mismatch: expected {i}, got {summary.publishedResponseAreaPosition}"
-            assert summary.totalSubmissions == s_raw["totalSubmissions"], \
-                f"totalSubmissions mismatch at position {i}"
-            assert summary.totalWrongSubmissions == s_raw["wrongSubmissions"], \
-                f"wrongSubmissions mismatch at position {i}"
-
-            ls_raw = s_raw.get("latestSubmission")
-            if ls_raw:
-                assert summary.latestSubmission is not None
-                assert summary.latestSubmission.feedback == ls_raw.get("feedback")
-                assert summary.latestSubmission.answer == ls_raw.get("answer")
-            else:
-                assert summary.latestSubmission is None
-
-    def test_access_information_fields(self, path):
-        """taskProgress fields (timeTaken, accessStatus, currentPart position) are preserved."""
-        data = load_example(path)
-        task_progress = _get_task_progress(data)
-        if not task_progress:
-            pytest.skip("no taskProgress in this example")
-
-        access_info = QuestionAccessInformation(**_build_access_information(task_progress))
-        current_part_raw = task_progress.get("currentPart", {})
-
-        assert access_info.timeTaken == task_progress.get("timeSpentOnQuestion")
-        assert access_info.accessStatus == task_progress.get("accessStatus")
-        assert access_info.currentPart.position == current_part_raw.get("position")
-        assert access_info.currentPart.timeTakenPart == current_part_raw.get("timeSpentOnPart")
-
-    def test_prompt_is_generated_and_contains_question_title(self, path):
-        """Full pipeline produces a non-empty prompt that includes the question title."""
-        data = load_example(path)
-        context = data.get("context", {})
-        if not context.get("question"):
-            pytest.skip("no question context")
-
-        task_progress = _get_task_progress(data)
-        current_part_progress = task_progress.get("currentPart", {})
-
-        question_information = QuestionDetails(**_build_question_information(context))
-        question_submission_summary = [
-            StudentWorkResponseArea(**s)
-            for s in _build_submission_summary(current_part_progress.get("responseAreas", []))
-        ]
-        question_access_information = (
-            QuestionAccessInformation(**_build_access_information(task_progress))
-            if task_progress else None
-        )
-
-        prompt = parse_json_to_prompt(
-            question_submission_summary,
-            question_information,
-            question_access_information,
-        )
-
-        assert isinstance(prompt, str) and len(prompt) > 0
-        title = context["question"].get("title", "")
-        if title:
-            assert title in prompt, f"Question title '{title}' not found in prompt"
+    def test_example_input_3_metadata_updates(self):
+        """Example input 3 has 13 messages — enough to trigger summarisation.
+        Verifies that summary and conversationalStyle are populated in the response."""
+        _, result_body = self._test("example_input_3.json")
+        self.assertGreater(len(result_body["metadata"]["summary"]), 0, "summary should be populated after summarisation")
+        self.assertGreater(len(result_body["metadata"]["conversationalStyle"]), 0, "conversationalStyle should be populated after summarisation")

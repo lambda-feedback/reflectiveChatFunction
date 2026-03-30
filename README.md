@@ -81,7 +81,9 @@ Also, don't forget to update or delete the Quickstart chapter from the `README.m
 
 You can create your own invocation to your own agents hosted anywhere. Copy or update the `agent.py` from `src/agent/` and edit it to match your LLM agent requirements. Import the new invocation in the `module.py` file.
 
-You agent can be based on an LLM hosted anywhere, you have available currently OpenAI, AzureOpenAI, and Ollama models but you can introduce your own API call in the `src/agent/utils/llm_factory.py`.
+Your agent can be based on an LLM hosted anywhere. OpenAI, Google AI, Azure OpenAI, and Ollama are available out of the box via `src/agent/llm_factory.py`, and you can add your own provider there too.
+
+The agent uses **two separate LLM instances** — `self.llm` for chat responses and `self.summarisation_llm` for conversation summarisation and style analysis. By default both use the same provider, but you can point them at different models (e.g. a cheaper or faster model for summarisation) by changing the class in `agent.py`.
 
 ### Prerequisites
 
@@ -99,13 +101,16 @@ You agent can be based on an LLM hosted anywhere, you have available currently O
 ├── docs/                                 # docs for devs and users
 ├── src/
 │   ├── agent/
-│   │   ├── utils/                        # utils for the agent, including the llm_factory
-│   │   ├── agent.py                      # the agent logic
-│   │   └── prompts.py                    # the system prompts defining the behaviour of the chatbot
-│   └── module.py                         
+│   │   ├── agent.py                      # LangGraph stateful agent logic
+│   │   ├── context.py                    # converts muEd context dicts to LLM prompt text
+│   │   ├── llm_factory.py                # factory classes for each LLM provider
+│   │   └── prompts.py                    # system prompts defining the behaviour of the chatbot
+│   └── module.py
 └── tests/                                # contains all tests for the chat function
+    ├── example_inputs/                   # muEd example payloads for end-to-end tests
     ├── manual_agent_requests.py          # allows testing of the docker container through API requests
     ├── manual_agent_run.py               # allows testing of any LLM agent on a couple of example inputs
+    ├── utils.py                          # shared test helpers
     ├── test_example_inputs.py            # pytests for the example input files
     ├── test_index.py                     # pytests
     └── test_module.py                    # pytests
