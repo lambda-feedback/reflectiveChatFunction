@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a boilerplate for creating AI educational chatbots that integrate with the **Lambda-Feedback** educational platform. It deploys as an AWS Lambda function (containerized via Docker) that receives student chat messages with educational context and returns LLM-powered chatbot responses.
+This is a chat function connecting students to an AI educational chatbot that is integrated with the **Lambda-Feedback** educational platform. It deploys as an AWS Lambda function (containerized via Docker) that receives student chat messages with educational context and returns LLM-powered chatbot responses.
 
 ## Commands
 
