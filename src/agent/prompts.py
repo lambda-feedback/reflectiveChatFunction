@@ -51,6 +51,11 @@ response_format_prompt = """Mathematical equations are in KaTeX format, preserve
 Example: '$E=mc^2$' or '$$E=mc^2$$'.
 Use British English spellings."""
 
+# 1b. Response Format Prompt
+response_format_prompt = """Mathematical equations are in KaTeX format, preserve them the same. Ensure mathematical equations are surrounded by one '$' for in-line equations and '$$' for block equations.
+Example: '$E=mc^2$' or '$$E=mc^2$$'.
+Use British English spellings."""
+
 # 2. Summary Prompts
 summary_guidelines = """Ensure the summary is:
 

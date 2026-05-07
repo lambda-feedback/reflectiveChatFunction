@@ -92,7 +92,7 @@ Input body (stringified within body for API request):
 {"body":"{\"conversationId\": \"12345Test\", \"messages\": [{\"role\": \"USER\", \"content\": \"hi\"}], \"user\": {\"type\": \"LEARNER\"}}"}
 ```
 
-Input body with optional fields:
+Body with optional fields:
 ```json
 {
   "conversationId": "<uuid>",
@@ -168,7 +168,7 @@ Input body with optional fields:
 }
 ```
 
-Output Response:
+Response:
 
 ```json
 {
