@@ -9,6 +9,8 @@ def handler(event, context):
     """
     Lambda handler function
     """
+    print("Received event:", json.dumps(event))
+
     if "body" in event:
         try:
             event = json.loads(event["body"])
