@@ -1,37 +1,14 @@
-import json
-from pydantic import ValidationError
+from lf_toolkit import create_server, run
 
-from lf_toolkit.chat import ChatRequest
-from src.module import chat_module
+from src.module import chat_health_module, chat_module
 
 
-def handler(event, context):
-    """
-    Lambda handler function
-    """
-    print("Received event:", json.dumps(event))
+def main():
+    server = create_server()
+    server.chat(chat_module)
+    server.chat_health(chat_health_module)
+    run(server)
 
-    if "body" in event:
-        try:
-            event = json.loads(event["body"])
-        except json.JSONDecodeError:
-            return {
-                "statusCode": 400,
-                "body": "Invalid JSON format in the body. Please check the input.",
-            }
 
-    try:
-        request = ChatRequest.model_validate(event)
-    except ValidationError as e:
-        return {"statusCode": 400, "body": e.json()}
-
-    try:
-        result = chat_module(request)
-    except Exception as e:
-        return {
-            "statusCode": 500,
-            "body": f"An error occurred within the chat_module(): {str(e)}",
-        }
-
-    response = {"statusCode": 200, "body": result.model_dump_json()}
-    return response
+if __name__ == "__main__":
+    main()
