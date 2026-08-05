@@ -1,10 +1,8 @@
-ARG BASE_VERSION=python:edge-3.12
+ARG BASE_VERSION=python:feature-chat-3.12
 
 # evaluation-function-base's python image bundles the shimmy binary,
 # the Lambda RIE, and the entrypoint.sh that picks between them.
-#FROM ghcr.io/lambda-feedback/evaluation-function-base/${BASE_VERSION}
-
-FROM python-chat-base
+FROM ghcr.io/lambda-feedback/evaluation-function-base/${BASE_VERSION}
 
 RUN apt-get update && apt-get install -y \
       build-essential \
