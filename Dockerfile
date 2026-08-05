@@ -1,4 +1,4 @@
-ARG BASE_VERSION=python:chat-testing-3.12
+ARG BASE_VERSION=python:3.12
 
 # evaluation-function-base's python image bundles the shimmy binary,
 # the Lambda RIE, and the entrypoint.sh that picks between them.
