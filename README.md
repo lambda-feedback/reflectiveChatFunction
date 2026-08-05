@@ -201,7 +201,7 @@ POST URL:
 http://localhost:8080/chat
 ```
 
-Per the [muEd `ChatRequest` schema](https://mued.org/), only `messages` is required; `conversationId`, `user`, `context`, and `configuration` are all optional. Requests must include an `X-Api-Version: 0.1.0` header.
+Per the [muEd `ChatRequest` schema](https://mued.org/), only `messages` is required; `conversationId`, `user`, `context`, and `configuration` are all optional. Requests may include an `X-Api-Version: 0.1.0` header.
 
 **Minimal request — only required components:**
 
