@@ -32,4 +32,6 @@ ENV FUNCTION_ARGS="index.py"
 # The transport to use for the RPC server
 ENV FUNCTION_RPC_TRANSPORT="ipc"
 
+ENV FUNCTION_WORKER_SEND_TIMEOUT="170s"
+
 ENV LOG_LEVEL="debug"
