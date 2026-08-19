@@ -70,7 +70,7 @@ def chat_health_module() -> ChatHealthResponse:
         status=HealthStatus.OK,
         capabilities=ChatCapabilities(
             supportsChat=True,
-            supportsUserPreferences=True,
+            supportsUserPreferences=False,
             supportsStreaming=False,
             supportsDataPolicy=DataPolicySupport.NOT_SUPPORTED,
         ),

@@ -24,19 +24,15 @@ OPENAI_MODEL
 GOOGLE_AI_API_KEY
 GOOGLE_AI_MODEL
 ```
-
-> [!Note]
-> If you decide to use another endpoint such as Azure or Ollama or any other, please update the github workflow files to use the right secrets and variables for testing.
+> If you use OpenRouter:
 ```bash
-> If you use Azure-OpenAI:
-AZURE_OPENAI_API_KEY
-AZURE_OPENAI_ENDPOINT
-AZURE_OPENAI_API_VERSION
-AZURE_OPENAI_CHAT_DEPLOYMENT_NAME
-AZURE_OPENAI_EMBEDDING_3072_DEPLOYMENT
-AZURE_OPENAI_EMBEDDING_1536_DEPLOYMENT
-AZURE_OPENAI_EMBEDDING_3072_MODEL
-AZURE_OPENAI_EMBEDDING_1536_MODEL
+OPENROUTER_API_KEY
+OPENROUTER_MODEL
+OPENROUTER_BASE_URL
+```
+
+> [!NOTE]
+> If you decide to use other providers like Azure OpenAI or Ollama, you will need to update the workflow files and the `llm_factory.py` file to include the necessary environment variables for those providers.
 
 > For monitoring of the LLM calls (follow instructions on how to set up on langsmith online):
 LANGCHAIN_TRACING_V2
