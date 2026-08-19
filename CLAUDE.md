@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a chat function connecting students to an AI educational chatbot that is integrated with the **Lambda-Feedback** educational platform. It's containerized via Docker and deployed behind [shimmy](https://github.com/lambda-feedback/shimmy), a shim that spawns this function as a persistent JSON-RPC worker process and exposes it as the muEd `/chat` / `/chat/health` HTTP API (both locally and as an AWS Lambda container). Incoming requests follow the [muEd API](https://mued.org/) schema (`context`, `user`, `messages`).
+This is a chat function connecting students to an AI educational chatbot that is integrated with the **Lambda-Feedback** educational platform. It's containerized via Docker and deployed behind [shimmy](https://github.com/lambda-feedback/shimmy), a shim that spawns this function as a persistent JSON-RPC worker process and exposes it as the muEd `/chat` / `/chat/health` HTTP API (both locally and as an AWS Lambda container). It receives student chat messages with educational context and returns LLM-powered chatbot responses. Incoming requests follow the [muEd API](https://mued.org/) schema (`context`, `user`, `messages`).
 
 ## Commands
 

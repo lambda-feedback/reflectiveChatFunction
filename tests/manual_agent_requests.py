@@ -1,5 +1,4 @@
 import requests
-import json
 
 """
 Script that sends requests straight to shimmy's muEd chat routes on the

@@ -94,7 +94,7 @@ POST URL:
 http://localhost:8080/chat
 ```
 
-Input body (requests must include an `X-Api-Version: 0.1.0` header):
+Body (requests may include an `X-Api-Version: 0.1.0` header):
 
 ```JSON
 {"conversationId": "12345Test", "messages": [{"role": "USER", "content": "hi"}], "user": {"type": "LEARNER"}}
