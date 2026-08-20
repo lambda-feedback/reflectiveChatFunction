@@ -1,18 +1,14 @@
 import os
 from typing import Optional
 
-from langchain_openai import AzureChatOpenAI
-from langchain_openai import AzureOpenAIEmbeddings
-from langchain_community.llms import Ollama
-from langchain_community.embeddings import OllamaEmbeddings
 from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
-from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
 load_dotenv()
 
 class AzureLLMs:
     def __init__(self, temperature: int = 0):
+        from langchain_openai import AzureChatOpenAI, AzureOpenAIEmbeddings
+
         self._azure_llm = AzureChatOpenAI(
                         openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
                         azure_deployment=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"],
@@ -31,6 +27,9 @@ class AzureLLMs:
 
 class OllamaLLMs:
     def __init__(self):
+        from langchain_community.llms import Ollama
+        from langchain_community.embeddings import OllamaEmbeddings
+
         self._ollama_llm = Ollama(
             model=os.environ['OLLAMA_MODEL'],
             base_url=os.environ['OLLAMA_BASE_URL'],
@@ -62,19 +61,13 @@ class OpenAILLMs:
             api_key=os.environ["OPENAI_API_KEY"],
         )
 
-        self._openai_embedding = OpenAIEmbeddings(
-            model='text-embedding-ada-002',
-            api_key=os.environ['OPENAI_API_KEY'],
-        )
-
     def get_llm(self):
         return self._openai_llm
 
-    def get_embedding(self):
-        return self._openai_embedding
-
 class GoogleAILLMs:
     def __init__(self, temperature: int = 0):
+        from langchain_google_genai import ChatGoogleGenerativeAI
+
         self._google_llm = ChatGoogleGenerativeAI(
             model=os.environ['GOOGLE_AI_MODEL'],
             temperature=temperature,
