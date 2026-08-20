@@ -6,7 +6,6 @@ from lf_toolkit.shared.mued_api_v0_1_0 import DataPolicySupport, HealthStatus, R
 
 from src.agent.context import parse_json_to_prompt
 
-
 def chat_module(request: ChatRequest) -> ChatResponse:
     """
     Main entry point — receives a ChatRequest and returns a ChatResponse.
@@ -20,9 +19,6 @@ def chat_module(request: ChatRequest) -> ChatResponse:
     Edit src/agent/prompts.py to change the chatbot's behaviour.
     Edit src/agent/agent.py to change the agent logic (summarisation threshold, LLM provider, etc.).
     """
-    # Deferred: this pulls in langgraph/langchain/the LLM provider SDKs and builds the agent.
-    # Importing it lazily keeps worker boot (and the RPC socket bind) fast, avoiding a cold-start
-    # dial race against shimmy's worker-start-timeout.
     from src.agent.agent import invoke_base_agent
 
     conversation_id = request.conversationId
