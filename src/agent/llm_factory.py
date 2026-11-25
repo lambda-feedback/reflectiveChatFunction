@@ -39,7 +39,7 @@ class OpenAILLMs:
 
         self._openai_llm = ChatOpenAI(
             model=os.environ['OPENAI_MODEL'],
-            temperature=temperature,
+            # temperature=temperature, # not supported from gpt-6 onwards
             api_key=os.environ["OPENAI_API_KEY"],
         )
 
